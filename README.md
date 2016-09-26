@@ -265,6 +265,7 @@ are [documented here](Longhelp.md#templates).
   >
   < HTTP/1.1 200 OK
   ```
+ * You may want to set the `HAPROXY_RELOAD_SIGTERM_DELAY` environment variable to a value such as `5m`. This value is passed directly to the `sleep` command, which is executed after every HAProxy reload before sending a SIGTERM to the old HAProxy PIDs (see [service/haproxy/run](service/haproxy/run)). For cases where you expect long-lived TCP connections, you may _not_ want to terminate HAProxy before all connections finish. See [this discussion](http://www.serverphorums.com/read.php?10,862139) for more on HAProxy reloads, and issues [#5](https://github.com/mesosphere/marathon-lb/issues/5), [#71](https://github.com/mesosphere/marathon-lb/issues/71), [#267](https://github.com/mesosphere/marathon-lb/issues/267), [#276](https://github.com/mesosphere/marathon-lb/issues/276), and [#318](https://github.com/mesosphere/marathon-lb/issues/318) for more. If you are reloading so frequently that PIDs are being reused within the delay you specify, this may result in SIGTERMs being sent to the wrong PIDs.
 
 ## Zero-downtime Deployments
 
